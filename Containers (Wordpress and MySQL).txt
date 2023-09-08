@@ -1,0 +1,21 @@
+# Run a MySQL container with detached mode (-d), naming it 'mywpdb'.
+# Set environment variables for root password and database name.
+docker run -d --name mywpdb -e MYSQL_ROOT_PASSWORD=pass@1234 -e MYSQL_DATABASE=wordpressdb mysql
+
+# List the running containers to check if 'mywpdb' is up and running.
+docker ps
+
+# List Docker images to see if the 'mysql' image is downloaded and available.
+docker images
+
+# Run a WordPress container with detached mode (-d) and port mapping (-p).
+# Set environment variables for database host, user, password, and database name.
+# Link 'mywpdb' container to establish communication.
+docker run -d -p 80:80 -e WORDPRESS_DB_HOST=mywpdb -e WORDPRESS_DB_USER=root -e WORDPRESS_DB_PASSWORD=pass@1234 -e WORDPRESS_DB_NAME=wordpressdb --link mywpdb:mysql wordpress
+
+# List the running containers again to check if the WordPress container is up and running.
+docker ps
+
+# Start an interactive shell session within the 'container ID' container.
+# You can use this to access the container's command line and perform tasks within it.
+docker exec -it container ID /bin/bash
